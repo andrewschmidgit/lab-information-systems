@@ -1,3 +1,9 @@
+# Fork Information
+This repository has been unmaintained for a few years,
+so I have decided to spruce things up. This fork contains
+all commits before the GPL license change.
+(added in SwatInc/SwatInc.Lis.Lis01A2@ab507a1).
+
 # Tested With the following analysers
 Note that each branch in this repository is actually a main brach with specific changes for specific analysers. The master branch is the generic one which will try to adhere with the LIS2-A2 standard.
 

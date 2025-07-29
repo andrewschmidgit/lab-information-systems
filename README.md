@@ -1,97 +1,128 @@
-# Fork Information
+# LIS.LIS01A2
 This repository has been unmaintained for a few years,
 so I have decided to spruce things up. This fork contains
 all commits before the GPL license change.
 (added in SwatInc/SwatInc.Lis.Lis01A2@ab507a1).
 
-# Tested With the following analysers
-Note that each branch in this repository is actually a main brach with specific changes for specific analysers. The master branch is the generic one which will try to adhere with the LIS2-A2 standard.
-
-- CelltacG-MEK-9100
-- EvidenceInvestigator-RandoxLaboratories
-- RX_Daytona+
-
-# SwatInc.Lis.Lis01A2
-This library is an OO implementation of the CLSI LIS01-A2 standard. Specification for Low-Level Protocol to Transfer Messages Between Clinical Laboratory Instruments and 
+This is an OO implementation of the CLSI LIS01-A2 standard. Specification for Low-Level Protocol to Transfer Messages Between Clinical Laboratory Instruments and 
 Computer Systems.
 
 The two libraries in this repo are C# implementations of the same from [Essy.LIS](https://www.nuget.org/packages/Essy.LIS.LIS02A2/).
 
-## Instructions For Use
+## Quick Start
 
-### Add these namespaces to your code
-```C#
-using SwatInc.Lis.Lis01A2.Interfaces;
-using SwatInc.Lis.Lis01A2.Services;
-using SwatInc.Lis.Lis02A2;
+
+### Add GitHub NuGet registry source
+
+> [!WARNING]
+> These packages are only available in GitHub packages at the moment
+> issue #1
+> 
+> You will need to generate a personal access token that has `read:packages`
+
+Either add the nuget source to your machine
+```sh
+dotnet nuget add source \
+    --name lis \
+    --username USERNAME \
+    --password "<your personal access token>" \
+    --store-password-in-clear-text \
+    https://https://nuget.pkg.github.com/andrewschmidgit/index.json
 ```
 
-### TCP/IP
-```C#
-      var someIP = "192.168.1.11";
-      UInt16 somePort = 1111;
-      var lowLevelConnection = new Lis01A02TCPConnection(someIP, somePort);
-      var lisConnection = new Lis01A2Connection(lowLevelConnection);
-```
-### Serial port
-```C#
-      var sp = new System.IO.Ports.SerialPort("COM1");
-      // Config Serial port to your needs
-      var lowLevelConnection = new Lis01A02RS232Connection(sp);
-      var lisConnection = new Lis01A2Connection(lowLevelConnection);
+Or add a `nuget.config` file to the root of your repo
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <packageSources>
+    <!--To inherit the global NuGet package sources remove the <clear/> line below -->
+    <clear />
+    <add key="nuget" value="https://api.nuget.org/v3/index.json" />
+    <add key="nuget" value="https://nuget.pkg.github.com/andrewschmidgit/index.json" />
+  </packageSources>
+</configuration>
 ```
 
-### Create LIS parser object and connect
-```C#
-      var LISParser = new LISParser(lisConnection);
-      LISParser.OnSendProgress += LISParser_OnSendProgress; //Send data progress will trigger this event
-      LISParser.OnReceivedRecord += LISParser_OnReceivedRecord; //incoming LIS frames will trigger this event
-      LISParser.Connection.Connect();
+> [!NOTE]
+> You will need to provide the password in a `nuget.config`
+> file located higher up the file tree,
+> like in your `$HOME` directory
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<packageSourceCredentials>
+		<github>
+			<add key="username" value="<your github username>" />
+			<add key="cleartextpassword" value="<your personal access token>" />
+		</github>
+	</packageSourceCredentials>
+</configuration>
+
 ```
-```C#
-    private static void LISParser_OnReceivedRecord(object Sender, ReceiveRecordEventArgs e)
-    {
 
-    }
+### Add packages
+```sh
+# LIS01A2
+dotnet add package LIS.LIS01A2
 
-    private static void LISParser_OnSendProgress(object sender, SendProgressEventArgs e)
-    {
-
-    }
+# LIS02A2
+dotnet add package LIS.LIS02A2
 ```
-### Now you are ready to receive incoming packets or you can transmit data
-```C#
-            var lisRecordList = new List<AbstractLisRecord>();
-            var hr = new HeaderRecord();
-            hr.SenderID = "Some Sender ID Code";
-            hr.ProcessingID = HeaderProcessingID.Production;
-            lisRecordList.Add(hr);
-            var pr = new PatientRecord();
-            pr.SequenceNumber = 1;
-            pr.LaboratoryAssignedPatientID = "Sam001";
-            lisRecordList.Add(pr);
-            var orderRec = new OrderRecord();
-            orderRec.SequenceNumber = 1;
-            orderRec.SpecimenID = "Sam001";
-            orderRec.TestID = new UniversalTestID();
-            orderRec.TestID.ManufacturerCode = "T001";
-            orderRec.ReportType = OrderReportType.Final;
-            lisRecordList.Add(orderRec);
-            pr = new PatientRecord();
-            pr.SequenceNumber = 2;
-            pr.LaboratoryAssignedPatientID = "Sam002";
-            lisRecordList.Add(pr);
-            orderRec = new OrderRecord();
-            orderRec.SequenceNumber = 1;
-            orderRec.SpecimenID = "Sam002";
-            orderRec.TestID = new UniversalTestID();
-            orderRec.TestID.ManufacturerCode = "T001";
-            orderRec.ReportType = OrderReportType.Final;
-            lisRecordList.Add(orderRec);
-            var tr = new TerminatorRecord();
-            lisRecordList.Add(tr);
-            LISParser.SendRecords(lisRecordList);
+
+### Usage
+```cs
+// tcp
+var listenIP = "127.0.0.1";
+UInt16 port = 1111;
+var tcpConnection = new Lis01A02TCPConnection(listenIP, port);
+var lisConnection = new Lis01A2Connection(tcpConnection);
+
+// serial
+var serialPort = new System.IO.Ports.SerialPort("COM1");
+var serialConnection = new Lis01A02RS232Connection(serialPort);
+var lisConnection = new Lis01A2Connection(serialConnection);
+
+var parser = new LISParser(lisConnection);
+
+// send data progress will trigger this event
+parser.OnSendProgress += (object sender, ReceiveRecordEventArgs e) => {};
+
+// incoming LIS frames will trigger this event
+parser.OnReceivedRecord += (object sender, ReceiveRecordEventArgs e) => {};
+
+parser.Connection.Connect();
+
+// use the parser to send data
+var lisRecordList = new List<AbstractLisRecord>();
+var hr = new HeaderRecord();
+hr.SenderID = "Some Sender ID Code";
+hr.ProcessingID = HeaderProcessingID.Production;
+lisRecordList.Add(hr);
+var pr = new PatientRecord();
+pr.SequenceNumber = 1;
+pr.LaboratoryAssignedPatientID = "Sam001";
+lisRecordList.Add(pr);
+var orderRec = new OrderRecord();
+orderRec.SequenceNumber = 1;
+orderRec.SpecimenID = "Sam001";
+orderRec.TestID = new UniversalTestID();
+orderRec.TestID.ManufacturerCode = "T001";
+orderRec.ReportType = OrderReportType.Final;
+lisRecordList.Add(orderRec);
+pr = new PatientRecord();
+pr.SequenceNumber = 2;
+pr.LaboratoryAssignedPatientID = "Sam002";
+lisRecordList.Add(pr);
+orderRec = new OrderRecord();
+orderRec.SequenceNumber = 1;
+orderRec.SpecimenID = "Sam002";
+orderRec.TestID = new UniversalTestID();
+orderRec.TestID.ManufacturerCode = "T001";
+orderRec.ReportType = OrderReportType.Final;
+lisRecordList.Add(orderRec);
+var tr = new TerminatorRecord();
+lisRecordList.Add(tr);
+LISParser.SendRecords(lisRecordList);
+
 ```
-You can fill the record data to your own needs. There are more record type that you can instantiate and transmit. The data is transmitted in the order of the list.
-
-

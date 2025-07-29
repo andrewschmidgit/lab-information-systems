@@ -1,5 +1,3 @@
-using System.Runtime.CompilerServices;
-
 namespace LIS.LIS02A2
 {
 	public class QueryRecord : AbstractLisRecord

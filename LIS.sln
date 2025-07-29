@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{946D7375-1EEF-4228-BA60-FC5DD0A46BB8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LIS.LIS01A2", "src\LIS.LIS01A2\LIS.LIS01A2.csproj", "{741452A6-798D-40DC-96C5-7F9DCAD6769F}"
+EndProject
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LIS.LIS02A2", "src\LIS.LIS02A2\LIS.LIS02A2.csproj", "{6EB57092-CDD5-4265-A4D6-BFC73FD2E757}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{741452A6-798D-40DC-96C5-7F9DCAD6769F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{741452A6-798D-40DC-96C5-7F9DCAD6769F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{741452A6-798D-40DC-96C5-7F9DCAD6769F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{741452A6-798D-40DC-96C5-7F9DCAD6769F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EB57092-CDD5-4265-A4D6-BFC73FD2E757}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EB57092-CDD5-4265-A4D6-BFC73FD2E757}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EB57092-CDD5-4265-A4D6-BFC73FD2E757}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EB57092-CDD5-4265-A4D6-BFC73FD2E757}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{741452A6-798D-40DC-96C5-7F9DCAD6769F} = {946D7375-1EEF-4228-BA60-FC5DD0A46BB8}
+		{6EB57092-CDD5-4265-A4D6-BFC73FD2E757} = {946D7375-1EEF-4228-BA60-FC5DD0A46BB8}
+	EndGlobalSection
+EndGlobal

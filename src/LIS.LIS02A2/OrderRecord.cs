@@ -11,9 +11,9 @@ namespace LIS.LIS02A2
 		[LisRecordField(3)]
 		public string SpecimenID { get; set; }
 
-//8.4.4 Instrument Specimen ID
-//This text field shall represent a unique identifier assigned by the instrument, if different from the
-//information system identifier, and returned with results for use in referring to any results.
+		//8.4.4 Instrument Specimen ID
+		//This text field shall represent a unique identifier assigned by the instrument, if different from the
+		//information system identifier, and returned with results for use in referring to any results.
 		[LisRecordField(4)]
 		public string InstrumentSpecimenID { get; set; }
 
@@ -42,7 +42,7 @@ namespace LIS.LIS02A2
 
 
 
-        [LisRecordField(12)]
+		[LisRecordField(12)]
 		public OrderActionCode ActionCode { get; set; }
 
 		[LisRecordField(26)]

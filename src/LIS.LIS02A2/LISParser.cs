@@ -1,11 +1,13 @@
-using slf4net;
-using LIS.LIS01A2;
-using LIS.LIS01A2.Interfaces;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading;
+
+using LIS.LIS01A2;
+using LIS.LIS01A2.Interfaces;
+
+using slf4net;
 
 
 namespace LIS.LIS02A2
@@ -109,56 +111,56 @@ namespace LIS.LIS02A2
 			char RecordTypeChar = aReceivedRecordString[0];
 			switch (RecordTypeChar)
 			{
-			default:
-				if (RecordTypeChar != 'H')
-				{
-					if (RecordTypeChar == 'P')
+				default:
+					if (RecordTypeChar != 'H')
 					{
-						goto case 'P';
-					}
-					if (RecordTypeChar == 'O')
-					{
-						goto case 'O';
-					}
-					if (RecordTypeChar != 'Q')
-					{
-						switch (RecordTypeChar)
+						if (RecordTypeChar == 'P')
 						{
-						default:
-							return;
-						case 'R':
-							break;
-						case 'L':
-							tempArgs.ReceivedRecord = new TerminatorRecord(aReceivedRecordString);
-							tempArgs.RecordType = LisRecordType.Terminator;
-							fOnReceivedRecord(this, tempArgs);
-							return;
+							goto case 'P';
 						}
-						break;
+						if (RecordTypeChar == 'O')
+						{
+							goto case 'O';
+						}
+						if (RecordTypeChar != 'Q')
+						{
+							switch (RecordTypeChar)
+							{
+								default:
+									return;
+								case 'R':
+									break;
+								case 'L':
+									tempArgs.ReceivedRecord = new TerminatorRecord(aReceivedRecordString);
+									tempArgs.RecordType = LisRecordType.Terminator;
+									fOnReceivedRecord(this, tempArgs);
+									return;
+							}
+							break;
+						}
+						goto case 'Q';
 					}
-					goto case 'Q';
-				}
-				tempArgs.ReceivedRecord = new HeaderRecord(aReceivedRecordString);
-				tempArgs.RecordType = LisRecordType.Header;
-				fOnReceivedRecord(this, tempArgs);
-				return;
-			case 'P':
-				tempArgs.ReceivedRecord = new PatientRecord(aReceivedRecordString);
-				tempArgs.RecordType = LisRecordType.Patient;
-				fOnReceivedRecord(this, tempArgs);
-				return;
-			case 'O':
-				tempArgs.ReceivedRecord = new OrderRecord(aReceivedRecordString);
-				tempArgs.RecordType = LisRecordType.Order;
-				fOnReceivedRecord(this, tempArgs);
-				return;
-			case 'Q':
-				tempArgs.ReceivedRecord = new QueryRecord(aReceivedRecordString);
-				tempArgs.RecordType = LisRecordType.Query;
-				fOnReceivedRecord(this, tempArgs);
-				return;
-			case 'R':
-				break;
+					tempArgs.ReceivedRecord = new HeaderRecord(aReceivedRecordString);
+					tempArgs.RecordType = LisRecordType.Header;
+					fOnReceivedRecord(this, tempArgs);
+					return;
+				case 'P':
+					tempArgs.ReceivedRecord = new PatientRecord(aReceivedRecordString);
+					tempArgs.RecordType = LisRecordType.Patient;
+					fOnReceivedRecord(this, tempArgs);
+					return;
+				case 'O':
+					tempArgs.ReceivedRecord = new OrderRecord(aReceivedRecordString);
+					tempArgs.RecordType = LisRecordType.Order;
+					fOnReceivedRecord(this, tempArgs);
+					return;
+				case 'Q':
+					tempArgs.ReceivedRecord = new QueryRecord(aReceivedRecordString);
+					tempArgs.RecordType = LisRecordType.Query;
+					fOnReceivedRecord(this, tempArgs);
+					return;
+				case 'R':
+					break;
 			}
 			tempArgs.ReceivedRecord = new ResultRecord(aReceivedRecordString);
 			tempArgs.RecordType = LisRecordType.Result;
@@ -205,7 +207,7 @@ namespace LIS.LIS02A2
 			Connection = aConnection;
 			//slf4net.LoggerFactory.GetLogger(typeof(MyClass));
 
-			fLog =  LoggerFactory.GetLogger(typeof(LISParser));
+			fLog = LoggerFactory.GetLogger(typeof(LISParser));
 		}
 
 		public void SendRecords(IEnumerable<AbstractLisRecord> records)

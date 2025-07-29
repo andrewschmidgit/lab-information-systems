@@ -2,26 +2,26 @@
 
 namespace LIS.LIS01A2.Interfaces
 {
-    public interface ILisConnection : IDisposable
-    {
-        LisConnectionStatus Status { get; set; }
+	public interface ILisConnection : IDisposable
+	{
+		LisConnectionStatus Status { get; set; }
 
-        void Connect();
+		void Connect();
 
-        void DisConnect();
+		void DisConnect();
 
-        bool EstablishSendMode();
+		bool EstablishSendMode();
 
-        void SendMessage(string aMessage);
+		void SendMessage(string aMessage);
 
-        void StartReceiveTimeoutTimer();
+		void StartReceiveTimeoutTimer();
 
-        void StopSendMode();
+		void StopSendMode();
 
-        event EventHandler OnLISConnectionClosed;
+		event EventHandler OnLISConnectionClosed;
 
-        event EventHandler<LISConnectionReceivedDataEventArgs> OnReceiveString;
+		event EventHandler<LISConnectionReceivedDataEventArgs> OnReceiveString;
 
-        event EventHandler OnReceiveTimeOut;
-    }
+		event EventHandler OnReceiveTimeOut;
+	}
 }

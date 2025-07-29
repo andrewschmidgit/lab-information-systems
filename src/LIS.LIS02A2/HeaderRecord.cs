@@ -44,7 +44,7 @@ namespace LIS.LIS02A2
 			return "H" + new string(LISDelimiters.FieldDelimiter, 1) + new string(LISDelimiters.RepeatDelimiter, 1) + new string(LISDelimiters.ComponentDelimiter, 1) + new string(LISDelimiters.EscapeCharacter, 1) + new string(LISDelimiters.FieldDelimiter, 1) + base.ToLISString();
 		}
 
-		public HeaderRecord(string aLisString): base(aLisString)
+		public HeaderRecord(string aLisString) : base(aLisString)
 		{
 			LISDelimiters.FieldDelimiter = aLisString[1];
 			LISDelimiters.RepeatDelimiter = aLisString[2];

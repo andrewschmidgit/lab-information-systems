@@ -31,11 +31,11 @@ namespace LIS.LIS02A2
 		public ResultStatus ResultStatus { get; set; }
 
 		[LisRecordField(11)]
-        public string OperatorIdentification { get; set; }
+		public string OperatorIdentification { get; set; }
 
 		[LisDateTimeUsage(LisDateTimeUsage.DateTime)]
 		[LisRecordField(12)]
-        public DateTime? TestStartedDateTime{ get; set; }
+		public DateTime? TestStartedDateTime { get; set; }
 
 		[LisDateTimeUsage(LisDateTimeUsage.DateTime)]
 		[LisRecordField(13)]
